@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="en" class="no-js" data-theme="dark"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cost Calculator | SentinelSec</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/theme.css"><style>
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .form-control {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  .form-select {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+  }
+  .calculator-card {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  .result-card {
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 32px;
+    margin-top: 32px;
+    display: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  .cost-breakdown {
+    margin-top: 24px;
+  }
+  .cost-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+  }
+  .cost-item:last-child {
+    border-bottom: none;
+  }
+  .total-row {
+    font-weight: bold;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-primary);
+    font-size: 18px;
+  }
+  .service-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
+    margin-top: 16px;
+  }
+  .service-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .service-option input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+  }
+  .button.button-primary {
+    margin-top: 8px;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+</style>
+</head><body class="has-animations"><div class="body-wrap"><header class="site-header invert-color"><div class="container"><div class="site-header-inner"><div class="brand"><h1 class="m-0"><a href="home.html"><img src="images/logo.svg" alt="SentinelSec" width="32" height="32"></a></h1></div><button id="header-nav-toggle" class="header-nav-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="screen-reader">Menu</span> <span class="hamburger"><span class="hamburger-inner"></span></span></button><nav id="header-nav" class="header-nav"><div class="header-nav-inner"><ul class="list-reset text-xs header-nav-right"><li><a href="home.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="case-studies.html">Case Studies</a></li><li><a href="calculator.html">Cost Calculator</a></li></ul><ul class="list-reset header-nav-right"><li><button id="theme-toggle" class="button button-dark button-wide-mobile button-sm" aria-pressed="false">Dark mode</button></li></ul></div></nav></div></div></header><main class="site-content"><section class="testimonial section has-bg-color-cut illustration-section-02"><div class="container"><div class="testimonial-inner section-inner"><div class="section-header center-content invert-color"><div class="container-xs"><h1 class="m-0">Cybersecurity Cost Calculator</h1><p class="m-0 text-sm">Estimate the cost of implementing cybersecurity measures for your organization.</p></div></div></div></div></section><section class="section"><div class="container"><div class="section-inner"><div class="features-split-inner section-inner has-top-divider"><div class="split-wrap"><div class="split-item"><div class="split-item-content" style="padding-right: 48px;">
+<div class="calculator-card">
+  <h3 class="mt-0 mb-16">Organization Details</h3>
+  <div class="form-group">
+    <label for="company-size">Organization Size</label>
+    <select id="company-size" class="form-select">
+      <option value="small">Small (1-50 employees)</option>
+      <option value="medium">Medium (51-500 employees)</option>
+      <option value="large">Large (501-5,000 employees)</option>
+      <option value="enterprise">Enterprise (5,000+ employees)</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="industry">Industry</label>
+    <select id="industry" class="form-select">
+      <option value="technology">Technology</option>
+      <option value="finance">Finance & Banking</option>
+      <option value="healthcare">Healthcare</option>
+      <option value="retail">Retail</option>
+      <option value="manufacturing">Manufacturing</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="endpoints">Number of Endpoints (Workstations, Servers, Mobile)</label>
+    <input type="number" id="endpoints" class="form-control" min="1" value="200">
+  </div>
+</div>
+
+<div class="calculator-card">
+  <h3 class="mt-0 mb-16">Required Services</h3>
+  <div class="form-group">
+    <label>Select Services Needed:</label>
+    <div class="service-options">
+      <div class="service-option">
+        <input type="checkbox" id="service-monitoring" checked>
+        <label for="service-monitoring">24/7 Security Monitoring</label>
+      </div>
+      <div class="service-option">
+        <input type="checkbox" id="service-pentesting">
+        <label for="service-pentesting">Penetration Testing</label>
+      </div>
+      <div class="service-option">
+        <input type="checkbox" id="service-incidentresponse">
+        <label for="service-incidentresponse">Incident Response</label>
+      </div>
+      <div class="service-option">
+        <input type="checkbox" id="service-cloudsecurity">
+        <label for="service-cloudsecurity">Cloud Security Engineering</label>
+      </div>
+      <div class="service-option">
+        <input type="checkbox" id="service-compliance">
+        <label for="service-compliance">Compliance Support</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="risk-level">Risk Profile</label>
+    <select id="risk-level" class="form-select">
+      <option value="low">Low Risk (Basic protection needs)</option>
+      <option value="medium" selected>Medium Risk (Standard security requirements)</option>
+      <option value="high">High Risk (Advanced security needs)</option>
+      <option value="critical">Critical Risk (Highest level of protection)</option>
+    </select>
+  </div>
+  <button id="calculate" class="button button-primary button-wide-mobile">Calculate Estimated Cost</button>
+</div>
+</div>
+<div class="split-item-image" style="position: relative;">
+<div class="result-card" id="results">
+  <h3 class="mt-0 mb-16">Estimated Annual Security Investment</h3>
+  <h2 id="total-cost" class="mt-0 mb-24">$125,000 - $175,000</h2>
+  <div class="cost-breakdown">
+    <div class="cost-item">
+      <span>Security Monitoring</span>
+      <span id="monitoring-cost">$40,000 - $60,000</span>
+    </div>
+    <div class="cost-item">
+      <span>Penetration Testing</span>
+      <span id="pentest-cost">$25,000 - $35,000</span>
+    </div>
+    <div class="cost-item">
+      <span>Incident Response Retainer</span>
+      <span id="ir-cost">$20,000 - $30,000</span>
+    </div>
+    <div class="cost-item">
+      <span>Cloud Security</span>
+      <span id="cloud-cost">$15,000 - $25,000</span>
+    </div>
+    <div class="cost-item">
+      <span>Compliance Support</span>
+      <span id="compliance-cost">$25,000 - $35,000</span>
+    </div>
+    <div class="cost-item total-row">
+      <span>Total Annual Investment</span>
+      <span id="total-annual">$125,000 - $175,000</span>
+    </div>
+  </div>
+  <p class="text-xs mt-16">This is an estimate based on the information provided. Contact us for a detailed assessment and customized quote.</p>
+  <div class="mt-24">
+    <a class="button button-primary button-wide-mobile" href="mailto:contact@sentinelsec.com?subject=Security%20Cost%20Estimate%20Request">Request Detailed Quote</a>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></main><footer class="site-footer center-content-mobile invert-color"><div class="container"><div class="site-footer-inner"><div class="footer-top space-between text-xxs"><div class="brand"><a href="home.html"><img src="images/logo.svg" alt="SentinelSec" width="32" height="32"></a></div><div class="footer-social"><ul class="list-reset"><li><a href="https://www.linkedin.com/in/mares-vassiljev-632b342b2/" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M15.3 0H.7C.3 0 0 .3 0 .7v14.7c0 .3.3.6.7.6h14.7c.4 0 .7-.3.7-.7V.7c-.1-.4-.4-.7-.8-.7zM4.7 13.6H2.4V6h2.4v7.6h-.1zM3.6 5c-.8 0-1.4-.7-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4-.1.7-.7 1.4-1.4 1.4zm10 8.6h-2.4V9.9c0-.9 0-2-1.2-2s-1.4 1-1.4 2v3.8H6.2V6h2.3v1c.3-.6 1.1-1.2 2.2-1.2 2.4 0 2.8 1.6 2.8 3.6v4.2h.1z"/></svg></a></li><li><a href="https://www.instagram.com/maresqqw/" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><title>Instagram</title><g><circle cx="12.145" cy="3.892" r="1"/><path d="M8 12c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm0-6c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z"/><path d="M12 16H4c-2.056 0-4-1.944-4-4V4c0-2.056 1.944-4 4-4h8c2.056 0 4 1.944 4 4v8c0 2.056-1.944 4-4 4zM4 2c-.935 0-2 1.065-2 2v8c0 .953 1.047 2 2 2h8c.935 0 2-1.065 2-2V4c0-.935-1.065-2-2-2H4z"/></g></svg></a></li><li><a href="https://www.facebook.com/share/17WfNHa5nG/?mibextid=wwXIfr" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><title>Facebook</title><path d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z"/></svg></a></li></ul></div></div><div class="footer-bottom space-between text-xxs invert-order-desktop"><nav class="footer-nav"><ul class="list-reset mb-0"><li><a href="home.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="case-studies.html">Case Studies</a></li><li><a href="calculator.html">Cost Calculator</a></li></ul></nav><div class="footer-copyright">&copy; 2025 SentinelSec, all rights reserved</div></div></div></div></footer></div><script src="js/main.min.js"></script><script src="scripts/theme.js"></script><script>
+document.addEventListener('DOMContentLoaded', function() {
+  const calculateBtn = document.getElementById('calculate');
+  const resultsCard = document.getElementById('results');
+  
+  calculateBtn.addEventListener('click', function() {
+    const companySize = document.getElementById('company-size').value;
+    const industry = document.getElementById('industry').value;
+    const employeesMap = {
+      'small': 25,
+      'medium': 250, 
+      'large': 2500,
+      'enterprise': 10000
+    };
+    const employees = employeesMap[companySize];
+    const endpoints = parseInt(document.getElementById('endpoints').value);
+    const riskLevel = document.getElementById('risk-level').value;
+    
+    // Get selected services
+    const monitoringSelected = document.getElementById('service-monitoring').checked;
+    const pentestSelected = document.getElementById('service-pentesting').checked;
+    const irSelected = document.getElementById('service-incidentresponse').checked;
+    const cloudSelected = document.getElementById('service-cloudsecurity').checked;
+    const complianceSelected = document.getElementById('service-compliance').checked;
+    
+    // Calculate costs based on inputs
+    let baseCost = calculateBaseCost(companySize, industry, endpoints, riskLevel);
+    
+    // Adjust for specific services
+    const monitoringCost = monitoringSelected ? calculateMonitoringCost(endpoints, riskLevel) : [0, 0];
+    const pentestCost = pentestSelected ? calculatePentestCost(companySize, riskLevel) : [0, 0];
+    const irCost = irSelected ? calculateIRCost(companySize, riskLevel) : [0, 0];
+    const cloudCost = cloudSelected ? calculateCloudCost(companySize, riskLevel) : [0, 0];
+    const complianceCost = complianceSelected ? calculateComplianceCost(industry, riskLevel) : [0, 0];
+    
+    // Display results
+    document.getElementById('monitoring-cost').innerText = formatRange(monitoringCost);
+    document.getElementById('pentest-cost').innerText = formatRange(pentestCost);
+    document.getElementById('ir-cost').innerText = formatRange(irCost);
+    document.getElementById('cloud-cost').innerText = formatRange(cloudCost);
+    document.getElementById('compliance-cost').innerText = formatRange(complianceCost);
+    
+    const totalMin = monitoringCost[0] + pentestCost[0] + irCost[0] + cloudCost[0] + complianceCost[0];
+    const totalMax = monitoringCost[1] + pentestCost[1] + irCost[1] + cloudCost[1] + complianceCost[1];
+    
+    document.getElementById('total-annual').innerText = formatRange([totalMin, totalMax]);
+    document.getElementById('total-cost').innerText = formatRange([totalMin, totalMax]);
+    
+    // Show results card
+    resultsCard.style.display = 'block';
+    
+    // Scroll to results
+    resultsCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  
+  // Helper functions
+  function calculateBaseCost(companySize, industry, endpoints, riskLevel) {
+    // Base calculation logic
+    let multiplier = 1;
+    
+    switch(companySize) {
+      case 'small': multiplier = 1; break;
+      case 'medium': multiplier = 2; break;
+      case 'large': multiplier = 3.5; break;
+      case 'enterprise': multiplier = 5; break;
+    }
+    
+    switch(industry) {
+      case 'finance': multiplier *= 1.5; break;
+      case 'healthcare': multiplier *= 1.4; break;
+      case 'technology': multiplier *= 1.3; break;
+      default: multiplier *= 1;
+    }
+    
+    switch(riskLevel) {
+      case 'low': multiplier *= 0.7; break;
+      case 'medium': multiplier *= 1; break;
+      case 'high': multiplier *= 1.5; break;
+      case 'critical': multiplier *= 2; break;
+    }
+    
+    return multiplier;
+  }
+  
+  function calculateMonitoringCost(endpoints, riskLevel) {
+    let basePrice = endpoints * 100;
+    let min = basePrice * 0.8;
+    let max = basePrice * 1.2;
+    
+    switch(riskLevel) {
+      case 'low': return [min * 0.7, max * 0.7];
+      case 'medium': return [min, max];
+      case 'high': return [min * 1.3, max * 1.3];
+      case 'critical': return [min * 1.6, max * 1.6];
+    }
+  }
+  
+  function calculatePentestCost(companySize, riskLevel) {
+    let baseMin, baseMax;
+    
+    switch(companySize) {
+      case 'small': baseMin = 15000; baseMax = 25000; break;
+      case 'medium': baseMin = 25000; baseMax = 40000; break;
+      case 'large': baseMin = 40000; baseMax = 60000; break;
+      case 'enterprise': baseMin = 60000; baseMax = 100000; break;
+    }
+    
+    switch(riskLevel) {
+      case 'low': return [baseMin * 0.7, baseMax * 0.7];
+      case 'medium': return [baseMin, baseMax];
+      case 'high': return [baseMin * 1.2, baseMax * 1.2];
+      case 'critical': return [baseMin * 1.5, baseMax * 1.5];
+    }
+  }
+  
+  function calculateIRCost(companySize, riskLevel) {
+    let baseMin, baseMax;
+    
+    switch(companySize) {
+      case 'small': baseMin = 10000; baseMax = 20000; break;
+      case 'medium': baseMin = 20000; baseMax = 40000; break;
+      case 'large': baseMin = 40000; baseMax = 70000; break;
+      case 'enterprise': baseMin = 70000; baseMax = 120000; break;
+    }
+    
+    switch(riskLevel) {
+      case 'low': return [baseMin * 0.7, baseMax * 0.7];
+      case 'medium': return [baseMin, baseMax];
+      case 'high': return [baseMin * 1.3, baseMax * 1.3];
+      case 'critical': return [baseMin * 1.6, baseMax * 1.6];
+    }
+  }
+  
+  function calculateCloudCost(companySize, riskLevel) {
+    let baseMin, baseMax;
+    
+    switch(companySize) {
+      case 'small': baseMin = 10000; baseMax = 20000; break;
+      case 'medium': baseMin = 20000; baseMax = 35000; break;
+      case 'large': baseMin = 35000; baseMax = 60000; break;
+      case 'enterprise': baseMin = 60000; baseMax = 100000; break;
+    }
+    
+    switch(riskLevel) {
+      case 'low': return [baseMin * 0.7, baseMax * 0.7];
+      case 'medium': return [baseMin, baseMax];
+      case 'high': return [baseMin * 1.2, baseMax * 1.2];
+      case 'critical': return [baseMin * 1.5, baseMax * 1.5];
+    }
+  }
+  
+  function calculateComplianceCost(industry, riskLevel) {
+    let baseMin, baseMax;
+    
+    switch(industry) {
+      case 'finance': baseMin = 40000; baseMax = 60000; break;
+      case 'healthcare': baseMin = 35000; baseMax = 55000; break;
+      case 'technology': baseMin = 25000; baseMax = 45000; break;
+      default: baseMin = 20000; baseMax = 35000;
+    }
+    
+    switch(riskLevel) {
+      case 'low': return [baseMin * 0.7, baseMax * 0.7];
+      case 'medium': return [baseMin, baseMax];
+      case 'high': return [baseMin * 1.2, baseMax * 1.2];
+      case 'critical': return [baseMin * 1.5, baseMax * 1.5];
+    }
+  }
+  
+  function formatRange(range) {
+    if (range[0] === 0 && range[1] === 0) {
+      return 'N/A';
+    }
+    return '$' + formatNumber(Math.round(range[0])) + ' - $' + formatNumber(Math.round(range[1]));
+  }
+  
+  function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+});
+</script></body></html>
